@@ -49,7 +49,8 @@ function updateWeatherDetails(json) {
         'Rain': 'images/rain.png',
         'Snow': 'images/snow.png',
         'Clouds': 'images/cloud.png',
-        'Haze': 'images/mist.png'
+        'Haze': 'images/haze.png'
+        'Mist': 'images/mist.png'
     };
 
     image.src = weatherImages[json.weather[0].main] || '';
