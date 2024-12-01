@@ -7,10 +7,12 @@
 }
 
 :root {
-    --main-bg-color: #06283D;
-    --secondary-bg-color: #c5c5c5;
-    --primary-text-color: #06283D;
-    --secondary-text-color: rgb(109, 212, 205);
+    --main-bg-color: #4a90e2;
+    --secondary-bg-color: #ffffff;
+    --primary-text-color: #2c3e50;
+    --secondary-text-color: #4a90e2;
+    --hover-color: #357abd;
+    --shadow-color: rgba(74, 144, 226, 0.2);
 }
 
 body {
@@ -18,22 +20,51 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--main-bg-color);
+    background: linear-gradient(135deg, var(--main-bg-color), #357abd);
 }
 
 .container {
     position: relative;
-    width: 400px;
-    height: 105px;
+    width: 350px; /* 减小宽度 */
     background: var(--secondary-bg-color);
-    padding: 28px 32px;
-    overflow: hidden;
-    border-radius: 18px;
+    padding: 15px 20px; /* 减小内边距 */
+    border-radius: 16px; /* 稍微减小圆角 */
     font-family: 'Roboto', sans-serif;
-    transition: 0.6s ease-out;
+    box-shadow: 0 10px 20px var(--shadow-color);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 80px; /* 初始高度更小 */
+}
+
+.container:hover {
+    box-shadow: 0 15px 30px var(--shadow-color);
+}
+
+/* 自定义滚动条样式 */
+.container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background: var(--main-bg-color);
+    border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+    background: var(--hover-color);
 }
 
 .search-box {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--secondary-bg-color);
+    padding: 5px 0; /* 减小上下内边距 */
+    margin-bottom: 15px; /* 减小下边距 */
     width: 100%;
     height: min-content;
     display: flex;
@@ -43,50 +74,60 @@ body {
 
 .search-box input {
     color: var(--primary-text-color);
-    background: var(--secondary-bg-color);
     width: 80%;
-    font-size: 24px;
+    font-size: 20px; /* 减小字体大小 */
     font-weight: 500;
     text-transform: capitalize;
-    padding-left: 32px;
+    padding-left: 28px; /* 减小左内边距 */
+    background: transparent;
+    border-bottom: 2px solid var(--main-bg-color);
+    transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .search-box input::placeholder {
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--primary-text-color);
-    text-transform: capitalize;
+    color: #95a5a6;
+}
+
+.search-box input:focus {
+    border-bottom: 2px solid var(--hover-color);
 }
 
 .search-box button {
     cursor: pointer;
-    width: 50px;
-    height: 50px;
-    color: var(--primary-text-color);
-    background: #dff6ff;
+    width: 40px; /* 减小按钮尺寸 */
+    height: 40px;
+    color: var(--secondary-bg-color);
+    background: var(--main-bg-color);
     border-radius: 50%;
-    font-size: 22px;
-    transition: 0.4s ease;
+    font-size: 18px; /* 减小图标大小 */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .search-box button:hover {
-    color: #fff;
-    background: var(--main-bg-color);
+    background: var(--hover-color);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
 }
 
 .search-box i {
     position: absolute;
     color: var(--primary-text-color);
-    font-size: 28px;
+    font-size: 22px; /* 减小图标大小 */
 }
 
 .weather-box {
     text-align: center;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    scale: 0;
+    opacity: 0;
+    transform-origin: top;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .weather-box img {
-    width: 67%;
-    margin-top: 20px; /* 缩小间距 */
+    width: 50%; /* 缩小图片 */
+    margin-top: 10px; /* 减小间距 */
 }
 
 .weather-box .city-name {
@@ -98,11 +139,12 @@ body {
 
 .weather-box .temperature {
     position: relative;
-    color: var(--secondary-text-color);
-    font-size: 3.5rem; /* 缩小字体 */
+    color: var(--main-bg-color);
+    font-size: 3rem; /* 缩小字体 */
     font-weight: 800;
-    margin-top: 10px; /* 缩小间距 */
+    margin-top: 10px; /* 减小间距 */
     margin-left: -16px;
+    text-shadow: 2px 2px 4px var(--shadow-color);
 }
 
 .weather-box .temperature span {
@@ -113,7 +155,7 @@ body {
 
 .weather-box .description {
     color: var(--primary-text-color);
-    font-size: 20px; /* 缩小字体 */
+    font-size: 18px; /* 缩小字体 */
     font-weight: 500;
     text-transform: capitalize;
     margin-top: 5px; /* 缩小间距 */
@@ -123,7 +165,15 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: 20px; /* 缩小间距 */
+    margin-top: 15px; /* 减小间距 */
+    margin-bottom: 15px;
+    padding: 0 15px; /* 减小内边距 */
+    background: #f8f9fa;
+    border-radius: 10px;
+    scale: 0;
+    opacity: 0;
+    transform-origin: bottom;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .weather-details .humidity,
@@ -132,8 +182,8 @@ body {
 .weather-details .coords {
     display: flex;
     align-items: center;
-    width: 33.333333%;
-    height: 80px; /* 缩小高度 */
+    padding: 10px; /* 缩小内边距 */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .weather-details .humidity {
@@ -146,22 +196,33 @@ body {
     justify-content: flex-end;
 }
 
+.weather-details > div:hover {
+    transform: translateY(-2px);
+    background: rgba(74, 144, 226, 0.1);
+    border-radius: 8px;
+}
+
 .weather-details i {
-    color: var(--primary-text-color);
+    color: var(--main-bg-color);
     font-size: 26px;
     margin-right: 10px;
     margin-top: 6px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.weather-details > div:hover i {
+    transform: scale(1.1);
 }
 
 .weather-details span {
     color: var(--primary-text-color);
-    font-size: 20px; /* 缩小字体 */
+    font-size: 16px; /* 缩小字体 */
     font-weight: 500;
 }
 
 .weather-details p {
-    color: var(--primary-text-color);
-    font-size: 14px;
+    color: #7f8c8d;
+    font-size: 12px; /* 缩小字体 */
     font-weight: 500;
 }
 
@@ -192,14 +253,47 @@ body {
 }
 
 .fadeIn {
-    animation: 0.5s fadeIn forwards;
-    animation-delay: 0.5s;
+    animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: 0.2s;
 }
 
 @keyframes fadeIn {
-    to {
+    0% {
+        scale: 0.95;
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
         scale: 1;
         opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 添加新的退出动画 */
+@keyframes fadeOut {
+    from {
+        scale: 1;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        scale: 0.95;
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+}
+
+/* 添加容器高度动画 */
+@keyframes expandHeight {
+    from {
+        height: 80px;
+    }
+    to {
+        height: auto;
     }
 }
 
@@ -207,8 +301,8 @@ body {
     position: fixed;
     bottom: 10px;
     left: 10px;
-    color: #fff;
-    font-size: 12px;
+    color: var(--secondary-bg-color);
+    font-size: 12px; /* 缩小字体 */
     font-family: 'Roboto', sans-serif;
-    opacity: 0.6;
+    opacity: 0.8;
 }

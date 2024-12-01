@@ -66,21 +66,41 @@ function updateWeatherDetails(json) {
         ${Math.abs(lon)}°${lon >= 0 ? 'E' : 'W'}`;
     coords.innerHTML = showCoords(Math.floor(json.coord.lat), Math.floor(json.coord.lon));
 
-    // Reset animation classes
-    weatherBox.style.display = 'none';
-    weatherDetails.style.display = 'none';
-    weatherBox.classList.remove('fadeIn');
-    weatherDetails.classList.remove('fadeIn');
+    // 优化动画顺序
+    const showContent = () => {
+        weatherBox.style.display = '';
+        weatherDetails.style.display = '';
+        
+        // 延迟添加动画类
+        setTimeout(() => {
+            weatherBox.classList.add('fadeIn');
+            setTimeout(() => {
+                weatherDetails.classList.add('fadeIn');
+                // 动态调整容器高度
+                container.style.height = '590px';
+            }, 200);
+        }, 100);
+    };
 
-    // Trigger reflow to restart the animation
-    void weatherBox.offsetWidth;
-    void weatherDetails.offsetWidth;
-
-    weatherBox.style.display = '';
-    weatherDetails.style.display = '';
-    weatherBox.classList.add('fadeIn');
-    weatherDetails.classList.add('fadeIn');
-    container.style.height = '590px';
+    if (weatherBox.classList.contains('fadeIn')) {
+        // 如果已经显示内容，先淡出再显示新内容
+        weatherBox.style.animation = 'fadeOut 0.3s forwards';
+        weatherDetails.style.animation = 'fadeOut 0.3s forwards';
+        
+        setTimeout(() => {
+            weatherBox.style.display = 'none';
+            weatherDetails.style.display = 'none';
+            weatherBox.classList.remove('fadeIn');
+            weatherDetails.classList.remove('fadeIn');
+            // 重置动画
+            weatherBox.style.animation = '';
+            weatherDetails.style.animation = '';
+            
+            showContent();
+        }, 300);
+    } else {
+        showContent();
+    }
 }
 
 async function getWeather() {
